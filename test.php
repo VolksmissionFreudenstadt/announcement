@@ -19,11 +19,11 @@ function insertScaledText(&$img, $x, $y, $font, $size, $text) {
 }
 
 
-$img = @imagecreatetruecolor(1024, 768) or die('Unable to create GD-stream');
+$img = @imagecreate(1024, 768) or die('Unable to create GD-stream');
 
 // some colors
-$color['white'] = imagecolorallocatealpha($img, 255, 255, 255, 127);
-$color['black'] = imagecolorallocatealpha($img, 0, 0, 0, 127);
+$color['white'] = imagecolorallocate($img, 255, 255, 255);
+$color['black'] = imagecolorallocate($img, 0, 0, 0);
 
 // fill image with white
 imagefill($img, 0, 0, $color['white']);
