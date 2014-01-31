@@ -16,7 +16,7 @@ $img2 = imagecreatefromjpeg(dirname(__FILE__).'/test/test.jpg');
 imagecopy($img, $img2, 0, 0, 0, 0, 1024, 507);
 
 // write first text
-imagetext ($img, 43, 0, 40, 540, $color['black'], dirname(__FILE__).'/fonts/OpenSans-Regular.ttf', 'Sonntag, 15:00 Uhr');
+imagettftext ($img, 43, 0, 40, 540, $color['black'], dirname(__FILE__).'/fonts/OpenSans-Regular.ttf', 'Sonntag, 15:00 Uhr');
 
 
 
