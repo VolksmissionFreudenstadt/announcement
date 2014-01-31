@@ -19,7 +19,7 @@ imagecopy($img, $img2, 0, 0, 0, 0, 1024, 507);
 imagettftext ($img, 43, 0, 40, 580, $color['black'], dirname(__FILE__).'/fonts/OpenSans-Regular.ttf', 'Sonntag, 15:00 Uhr');
 
 // write second text
-imagettftext ($img, 43, 0, 40, 700, $color['black'], dirname(__FILE__).'/fonts/OpenSans-ExtraBold.ttf', 'Meet the Pastor');
+imagettftext ($img, 43, 0, 40, 700, $color['black'], dirname(__FILE__).'/fonts/OpenSans-ExtraBold.ttf', 'Meet the Pastor\rMeet the Pastor');
 
 
 imagealphablending($img, true);
