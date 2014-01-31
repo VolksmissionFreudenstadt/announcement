@@ -18,6 +18,7 @@ function insertScaledText(&$img, $x, $y, $font, $size, $text) {
 	imagedestroy($scl);
 }
 
+
 $img = @imagecreatetruecolor(1024, 768) or die('Unable to create GD-stream');
 
 // some colors
