@@ -20,5 +20,6 @@ Header('Content-Type: image/jpeg');
 imagejpeg($img);
 
 imagedestroy($img);
+imagedestroy($img2);
 exit;
 
