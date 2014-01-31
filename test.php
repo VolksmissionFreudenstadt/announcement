@@ -6,11 +6,15 @@ function insertScaledText(&$img, $x, $y, $font, $size, $text) {
 	$tmp = imagecreate(2048,1536);
 	$white = imagecolorallocate($tmp, 255, 255, 255);
 	$col = imagecolorallocate($tmp, 0, 0, 0);
-	imagefill($tmp, $white);
-	imagettftext($tmp, $size, 0, 0, 0, $col, $font, $text);
+	imagefill($tmp, 0, 0, $white);
+	imagettftext($tmp, $size, 0, 0, 100, $col, $font, $text);
+Header('Content-Type: image/jpeg');
+imagejpeg($tmp);
+die();
 	$dimensions = imagettfbbox($size, 0, $font, $text);
 	// scale image down
-	$scl = imagescale($tmp, 1024, 768);
+	$scl = imagecreate(1024,768);
+	imagecopyresampled($scl, $tmp, 0,0,0,0,1024, 768,2048,1536);
 	// copy text rectangle onto original image
 	imagecopy($img, $scl, $x, $y, 0, 0, $dimensions[2], $dimensions[3]);
 	// free memory
@@ -19,11 +23,11 @@ function insertScaledText(&$img, $x, $y, $font, $size, $text) {
 }
 
 
-$img = @imagecreate(1024, 768) or die('Unable to create GD-stream');
+$img = @imagecreatetruecolor(1024, 768) or die('Unable to create GD-stream');
 
 // some colors
-$color['white'] = imagecolorallocate($img, 255, 255, 255);
-$color['black'] = imagecolorallocate($img, 0, 0, 0);
+$color['white'] = imagecolorallocatealpha($img, 255, 255, 255, 127);
+$color['black'] = imagecolorallocatealpha($img, 0, 0, 0, 127);
 
 // fill image with white
 imagefill($img, 0, 0, $color['white']);
