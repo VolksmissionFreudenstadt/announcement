@@ -1,6 +1,7 @@
 <?php
 
 $img = @imagecreatetruecolor(1024, 768) or die('Unable to create GD-stream');
+imagealphablending($img, true);
 
 // some colors
 $color['white'] = imagecolorallocatealpha($img, 255, 255, 255, 127);
