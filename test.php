@@ -1,7 +1,6 @@
 <?php
 
 $img = @imagecreatetruecolor(1024, 768) or die('Unable to create GD-stream');
-imagealphablending($img, true);
 
 // some colors
 $color['white'] = imagecolorallocatealpha($img, 255, 255, 255, 127);
@@ -22,6 +21,9 @@ imagettftext ($img, 43, 0, 40, 580, $color['black'], dirname(__FILE__).'/fonts/O
 // write second text
 imagettftext ($img, 43, 0, 40, 700, $color['black'], dirname(__FILE__).'/fonts/OpenSans-ExtraBold.ttf', 'Meet the Pastor');
 
+
+imagealphablending($img, true);
+imagesavealpha($img, true);
 
 Header('Content-Type: image/jpeg');
 imagejpeg($img);
