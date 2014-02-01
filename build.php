@@ -51,7 +51,7 @@ function createImage ($event, $index, $config, $startDate, $endDate) {
 	
 	// write the image to the output folder
 	$fileName = $config['output']['path'].'/'.$config['output']['prefix'].$index.'.jpg';
-	echo 'Erstelle Folie für "'.$title.'" als '.$fileName.' ...<br />';
+	echo 'Erstelle Folie für "'.utf8_encode($title).'" als '.$fileName.' ...<br />';
 	$img->writeImage($fileName);
 }
 
