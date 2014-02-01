@@ -13,7 +13,7 @@ try {
 } catch (Exception $e) {}
 
 // get start date:
-if (strftime('%w')) $startDate=getTime('next Sunday'); else $startDate = getTime('now');
+if (strftime('%w')) $startDate=getTime('next Sunday', 11); else $startDate = getTime('now', 11);
 $endDate = getTime('+7 days', 23, 59, 59, $startDate);
 echo strftime('Start: %d.%m.%Y %H:%M:%S<br />', $startDate);
 
