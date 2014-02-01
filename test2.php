@@ -15,12 +15,12 @@ $draw->setFont(dirname(__FILE__).'/fonts/OpenSans-Regular.ttf');
 $draw->setFontSize(43);
 
 // first text
-$img->annotateImage($draw, 40, 600, 0, 'Sonntag, 15:00 Uhr');
+$img->annotateImage($draw, 30, 580, 0, 'Sonntag, 15:00 Uhr');
 
 // second text
 $draw->setFont(dirname(__FILE__).'/fonts/OpenSans-ExtraBold.ttf');
-$draw->setFontSize(50);
-$img->annotateImage($draw, 40, 680, 0, 'Meet the Pastor');
+$draw->setFontSize(60);
+$img->annotateImage($draw, 30, 650, 0, 'Meet the Pastor');
 
 
 header('Content-Type: image/jpeg');
