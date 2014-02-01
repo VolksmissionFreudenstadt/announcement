@@ -23,7 +23,7 @@ if ($db->connect_errno) {
 	throw new Exception('Kann nicht mit der Datenbank verbinden: '.$db->connect_error);
 }
 
-$sql = 'SELECT event.*,grp.calendar_id,grp.name FROM ko_event event '
+$sql = 'SELECT event.title,event.kommentar,event.startdatum,event.startzeit,event.my_vmfds_events_announcement_image,grp.my_vmfds_events_announcement_group_image,grp.calendar_id,grp.name FROM ko_event event '
 	  .'LEFT JOIN ko_eventgruppen grp ON (event.eventgruppen_id = grp.id) '
 	  .'WHERE '
 	  .'(STR_TO_DATE(CONCAT(event.startdatum, \' \', event.startzeit), \'%Y-%m-%d %H:%i:%s\')>=\''.strftime('%Y-%m-%d %H:%M:%S', $startDate).'\') '
