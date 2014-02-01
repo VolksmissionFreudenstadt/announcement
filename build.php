@@ -100,7 +100,7 @@ if ($config['output']['clear']) {
 $index = 0;
 
 // copy "pre" files
-if ($config['include']['pre']) {
+if ($config['include']['pre'] && $_POST['pre']) {
 	$files = glob($config['include']['pre'].'/*'); // get all file names
 	foreach($files as $file){ // iterate files
 		if(is_file($file)) {
@@ -113,13 +113,16 @@ if ($config['include']['pre']) {
 }
 
 // output the images
-foreach ($rows as $event) {
-	$index++;
-	createImage($event, $index, $config, $startDate, $endDate);
+if ($_POST['events']) {
+	foreach ($rows as $event) {
+		$index++;
+		createImage($event, $index, $config, $startDate, $endDate);
+	}
 }
 
+
 // copy "post" files
-if ($config['include']['post']) {
+if ($config['include']['post'] && $_POST['post']) {
 	$files = glob($config['include']['post'].'/*'); // get all file names
 	foreach($files as $file){ // iterate files
 		if(is_file($file)) {
