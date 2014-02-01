@@ -63,6 +63,9 @@ try {
 if (strftime('%w')) $startDate=getTime('next Sunday', 11); else $startDate = getTime('now', 11);
 $endDate = getTime('+7 days', 23, 59, 59, $startDate);
 
+// time code in file names
+$config['output']['prefix'] = strftime($config['output']['prefix'], $startDate);
+
 // connect to db
 $db = new mysqli($config['DB']['host'], $config['DB']['user'], $config['DB']['pass'], $config['DB']['name']);
 if ($db->connect_errno) {
