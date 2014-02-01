@@ -117,7 +117,7 @@ if ($config['include']['pre'] && $_POST['pre']) {
 	foreach($files as $file){ // iterate files
 		if(is_file($file)) {
 			$index++;
-			$dest = $config['output']['prefix'].$index.'.'.pathinfo($file, PATHINFO_EXTENSION);
+			$dest = $config['output']['path'].'/'.$config['output']['prefix'].$index.'.'.pathinfo($file, PATHINFO_EXTENSION);
 			echo 'Kopiere '.$file.' nach '.$dest.'...<br />';
 			copy($file, $dest);
 		}
@@ -138,7 +138,7 @@ if ($config['include']['post'] && $_POST['post']) {
 	$files = glob($config['include']['post'].'/*'); // get all file names
 	foreach($files as $file){ // iterate files
 		if(is_file($file)) {
-			$dest = $config['output']['prefix'].$index.'.'.pathinfo($file, PATHINFO_EXTENSION);
+			$dest = $config['output']['path'].'/'.$config['output']['prefix'].$index.'.'.pathinfo($file, PATHINFO_EXTENSION);
 			echo 'Kopiere '.$file.' nach '.$dest.'...<br />';
 			copy($file, $dest);
 		}
