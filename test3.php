@@ -20,7 +20,7 @@ echo strftime('Start: %d.%m.%Y %H:%M:%S<br />', $startDate);
 // connect to db
 $db = new mysqli($config['DB']['host'], $config['DB']['user'], $config['DB']['pass'], $config['DB']['name']);
 if ($db->connect_errno) {
-	raise new Exception('Kann nicht mit der Datenbank verbinden: '.$db->connect_error);
+	throw new Exception('Kann nicht mit der Datenbank verbinden: '.$db->connect_error);
 }
 
 $sql = 'SELECT event.*,grp.calendar_id,grp.name FROM ko_event event '
