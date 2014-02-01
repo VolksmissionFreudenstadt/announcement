@@ -14,7 +14,12 @@ $draw->setFillColor('black');
 $draw->setFont(dirname(__FILE__).'/fonts/OpenSans-Regular.ttf');
 $draw->setFontSize(43);
 
-$img->annotateImage($draw, 40, 600, 0, 'Sonntag 15:00');
+// first text
+$img->annotateImage($draw, 40, 600, 0, 'Sonntag, 15:00 Uhr');
+
+// second text
+$draw->setFont(dirname(__FILE__).'/fonts/OpenSans-ExtraBold.ttf');
+$img->annotateImage($draw, 40, 680, 0, 'Meet the Pastor');
 
 
 header('Content-Type: image/jpeg');
