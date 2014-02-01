@@ -40,9 +40,10 @@ function createImage ($event, $index, $config, $startDate, $endDate) {
 	$draw->setFontSize(60);
 	$img->annotateImage($draw, 30, 650, 0, $title);
 	
-	// for debug reasons: output first image and die
-	Header('Content-Type: image/jpeg');
-	echo $img;
+	// write the image to the output folder
+	$fileName = $config['output'].'/slide-'.$index.'.jpg';
+	echo 'Writing '.$fileName.' ...<br />';
+	$img->writeImage($fileName);
 }
 
 
