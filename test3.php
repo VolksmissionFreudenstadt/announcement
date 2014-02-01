@@ -10,7 +10,8 @@ function createImage ($event, $index, $config, $startDate, $endDate) {
 	$title = join(': ', $titleParts);
 	
 	// format time:
-	if ($eStart = strtotime($event['startdatum'])>$endDate) {
+	$eStart = strtotime($event['startdatum']);
+	if ($eStart>$endDate) {
 		$timeInfo = strtotime('%A, %d.%m., ', $eStart).substr($event['startzeit'], 0, 5).' Uhr';
 	} else {
 		$timeInfo = strtotime('%A, ', $eStart).substr($event['startzeit'], 0, 5).' Uhr';
@@ -83,6 +84,8 @@ while ($row = $res->fetch_assoc()) $rows[] = $row;
 
 foreach ($rows as $key => $row)
 	$rows[$key]['image'] = $row['my_vmfds_events_announcement_image'] ? $row['my_vmfds_events_announcement_image'] : $row['my_vmfds_events_announcement_group_image'];
+
+setlocale(LC_ALL, $config['locale']);
 
 $index = 0;
 foreach ($rows as $event) {
