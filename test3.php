@@ -41,7 +41,7 @@ function createImage ($event, $index, $config, $startDate, $endDate) {
 	$img->annotateImage($draw, 30, 650, 0, $title);
 	
 	// write the image to the output folder
-	$fileName = $config['output'].'/slide-'.$index.'.jpg';
+	$fileName = $config['output']['path'].'/slide-'.$index.'.jpg';
 	echo 'Writing '.$fileName.' ...<br />';
 	$img->writeImage($fileName);
 }
