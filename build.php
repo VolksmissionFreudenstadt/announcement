@@ -42,7 +42,7 @@ function createImage ($event, $index, $config, $startDate, $endDate) {
 	
 	// write the image to the output folder
 	$fileName = $config['output']['path'].'/'.$config['output']['prefix'].$index.'.jpg';
-	echo 'Writing '.$fileName.' ...<br />';
+	echo 'Erstelle Folie für "'.$title.'" als '.$fileName.' ...<br />';
 	$img->writeImage($fileName);
 }
 
@@ -106,7 +106,7 @@ if ($config['include']['pre'] && $_POST['pre']) {
 		if(is_file($file)) {
 			$index++;
 			$dest = $config['output']['prefix'].$index.'.'.pathinfo($file, PATHINFO_EXTENSION);
-			echo 'Copying '.$file.' to '.$dest.'...<br />';
+			echo 'Kopiere '.$file.' nach '.$dest.'...<br />';
 			copy($file, $dest);
 		}
 	}	
@@ -127,7 +127,7 @@ if ($config['include']['post'] && $_POST['post']) {
 	foreach($files as $file){ // iterate files
 		if(is_file($file)) {
 			$dest = $config['output']['prefix'].$index.'.'.pathinfo($file, PATHINFO_EXTENSION);
-			echo 'Copying '.$file.' to '.$dest.'...<br />';
+			echo 'Kopiere '.$file.' nach '.$dest.'...<br />';
 			copy($file, $dest);
 		}
 	}
