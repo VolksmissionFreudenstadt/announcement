@@ -1,3 +1,12 @@
+<html>
+	<head>
+		<title>Bekanntmachungen erstellen</title>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.4/themes/humanity/jquery-ui.css" />
+		 <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+		 <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+	</head>
+	<body>
 <?php
 
 
