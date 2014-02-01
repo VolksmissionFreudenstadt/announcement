@@ -32,5 +32,9 @@ $sql = 'SELECT event.*,grp.calendar_id,grp.name FROM ko_event event '
 	  .'ORDER BY STR_TO_DATE(CONCAT(event.startdatum, \' \', event.startzeit), \'%Y-%m-%d %H:%i:%s\') '
 	  .';';
 
-die ($sql);
+$res = $db->query($sql);
+$rows = array();
+while ($row = $res->fetch_assoc()) $rows[] = $row;
+
+die ('<pre>'.print_r($rows, 1));
 	  
