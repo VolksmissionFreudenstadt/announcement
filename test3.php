@@ -41,7 +41,7 @@ function createImage ($event, $index, $config, $startDate, $endDate) {
 	$img->annotateImage($draw, 30, 650, 0, $title);
 	
 	// write the image to the output folder
-	$fileName = $config['output']['path'].'/slide-'.$index.'.jpg';
+	$fileName = $config['output']['path'].'/'.$config['output']['prefix'].$index.'.jpg';
 	echo 'Writing '.$fileName.' ...<br />';
 	$img->writeImage($fileName);
 }
@@ -88,8 +88,43 @@ foreach ($rows as $key => $row)
 
 setlocale(LC_ALL, $config['locale']);
 
+// remove all files from output folder first?
+if ($config['output']['clear']) {
+	$files = glob($config['output']['clear'].'/*'); // get all file names
+	foreach($files as $file){ // iterate files
+		if(is_file($file))
+			unlink($file); // delete file
+	}	
+}
+
 $index = 0;
+
+// copy "pre" files
+if ($config['include']['pre']) {
+	$files = glob($config['include']['pre'].'/*'); // get all file names
+	foreach($files as $file){ // iterate files
+		if(is_file($file)) {
+			$index++;
+			copy($file, $config['output']['prefix'].$index.'.'.pathinfo($file, PATHINFO_EXTENSION));
+		}
+	}	
+}
+	
+}
+
+// output the images
 foreach ($rows as $event) {
 	$index++;
 	createImage($event, $index, $config, $startDate, $endDate);
-}	  
+}
+
+// copy "post" files
+if ($config['include']['post']) {
+	$files = glob($config['include']['post'].'/*'); // get all file names
+	foreach($files as $file){ // iterate files
+		if(is_file($file)) {
+			$index++;
+			copy($file, $config['output']['prefix'].$index.'.'.pathinfo($file, PATHINFO_EXTENSION));
+		}
+	}
+}
