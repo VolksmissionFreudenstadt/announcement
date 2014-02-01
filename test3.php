@@ -3,18 +3,17 @@
 
 function createImage ($event, $index, $config, $startDate, $endDate) {
 	// format title
-	if ($gConf = $config['groups'][$event['name']]) {
-		$titleParts = array();
-		if (!$gConf['no_group']) $titleParts[] = $event['name'];
-		if (!$gConf['no_title']) $titleParts[] = $event['title'] ? $event['title'] : $event['kommentar'];
-	}
+	$gConf = $config['groups'][$event['name']];
+	$titleParts = array();
+	if (!$gConf['no_group']) $titleParts[] = $event['name'];
+	if (!$gConf['no_title']) $titleParts[] = $event['title'] ? $event['title'] : $event['kommentar'];
 	$title = join(': ', $titleParts);
 	
 	// format time:
 	if ($eStart = strtotime($event['startdatum'])>$endDate) {
-		$timeInfo = strtime('%A, %d.%m., ', $eStart).substr($event['startzeit'], 0, 5).' Uhr';
+		$timeInfo = strtotime('%A, %d.%m., ', $eStart).substr($event['startzeit'], 0, 5).' Uhr';
 	} else {
-		$timeInfo = strtime('%A, ', $eStart).substr($event['startzeit'], 0, 5).' Uhr';
+		$timeInfo = strtotime('%A, ', $eStart).substr($event['startzeit'], 0, 5).' Uhr';
 	}
 	
 	// create the image
