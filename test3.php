@@ -28,7 +28,7 @@ $sql = 'SELECT event.*,grp.calendar_id,grp.name FROM ko_event event '
 	  .'WHERE '
 	  .'(STR_TO_DATE(CONCAT(event.startdatum, \' \', event.startzeit), \'%Y-%m-%d %H:%i:%s\')>=\''.strftime('%Y-%m-%d %H:%M:%S', $startDate).'\') '
 	  .'AND (STR_TO_DATE(CONCAT(event.startdatum, \' \', event.startzeit), \'%Y-%m-%d %H:%i:%s\')<=\''.strftime('%Y-%m-%d %H:%M:%S', $endDate).'\') '
-	  .'AND (grp.calendar_id IN ('.join(',',$config['kOOL']['calendars']).')) ';
+	  .'AND (grp.calendar_id IN ('.join(',',$config['kOOL']['calendars']).')) '
 	  .'ORDER BY STR_TO_DATE(CONCAT(event.startdatum, \' \', event.startzeit), \'%Y-%m-%d %H:%i:%s\') '
 	  .';';
 
