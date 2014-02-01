@@ -105,7 +105,9 @@ if ($config['include']['pre']) {
 	foreach($files as $file){ // iterate files
 		if(is_file($file)) {
 			$index++;
-			copy($file, $config['output']['prefix'].$index.'.'.pathinfo($file, PATHINFO_EXTENSION));
+			$dest = $config['output']['prefix'].$index.'.'.pathinfo($file, PATHINFO_EXTENSION);
+			echo 'Copying '.$file.' to '.$dest.'...<br />';
+			copy($file, $dest);
 		}
 	}	
 }
@@ -123,8 +125,9 @@ if ($config['include']['post']) {
 	$files = glob($config['include']['post'].'/*'); // get all file names
 	foreach($files as $file){ // iterate files
 		if(is_file($file)) {
-			$index++;
-			copy($file, $config['output']['prefix'].$index.'.'.pathinfo($file, PATHINFO_EXTENSION));
+			$dest = $config['output']['prefix'].$index.'.'.pathinfo($file, PATHINFO_EXTENSION);
+			echo 'Copying '.$file.' to '.$dest.'...<br />';
+			copy($file, $dest);
 		}
 	}
 }
