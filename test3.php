@@ -1,6 +1,6 @@
 <?php
 
-getTime($s, $hour=0, $minute=0, $second=0, $base=NULL) {
+function getTime($s, $hour=0, $minute=0, $second=0, $base=NULL) {
 	$tmp = strtotime($s, $base);
 	return mktime($hour, $minute, $second, strftime('%m', $tmp), strftime('%d', $tmp), strftime('%Y', $tmp));
 }
