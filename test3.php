@@ -111,8 +111,6 @@ if ($config['include']['pre']) {
 		}
 	}	
 }
-	
-}
 
 // output the images
 foreach ($rows as $event) {
