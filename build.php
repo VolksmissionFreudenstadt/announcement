@@ -50,7 +50,7 @@ function createImage ($event, $index, $config, $startDate, $endDate) {
 	$img->annotateImage($draw, 30, 650, 0, $title);
 	
 	// write the image to the output folder
-	$fileName = $config['output']['path'].'/'.$config['output']['prefix'].$index.'.jpg';
+	$fileName = $config['output']['path'].'/'.$config['output']['prefix'].str_pad($index, 3, '0', STR_PAD_LEFT).'.jpg';
 	echo 'Erstelle Folie für "'.utf8_encode($title).'" als '.$fileName.' ...<br />';
 	$img->writeImage($fileName);
 }
@@ -117,7 +117,7 @@ if ($config['include']['pre'] && $_POST['pre']) {
 	foreach($files as $file){ // iterate files
 		if(is_file($file)) {
 			$index++;
-			$dest = $config['output']['path'].'/'.$config['output']['prefix'].$index.'.'.pathinfo($file, PATHINFO_EXTENSION);
+			$dest = $config['output']['path'].'/'.$config['output']['prefix'].str_pad($index, 3, '0', STR_PAD_LEFT).'.'.pathinfo($file, PATHINFO_EXTENSION);
 			echo 'Kopiere '.$file.' nach '.$dest.'...<br />';
 			copy($file, $dest);
 		}
@@ -138,7 +138,7 @@ if ($config['include']['post'] && $_POST['post']) {
 	$files = glob($config['include']['post'].'/*'); // get all file names
 	foreach($files as $file){ // iterate files
 		if(is_file($file)) {
-			$dest = $config['output']['path'].'/'.$config['output']['prefix'].$index.'.'.pathinfo($file, PATHINFO_EXTENSION);
+			$dest = $config['output']['path'].'/'.$config['output']['prefix'].str_pad($index, 3, '0', STR_PAD_LEFT).'.'.pathinfo($file, PATHINFO_EXTENSION);
 			echo 'Kopiere '.$file.' nach '.$dest.'...<br />';
 			copy($file, $dest);
 		}
