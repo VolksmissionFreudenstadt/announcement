@@ -12,9 +12,9 @@ function createImage ($event, $index, $config, $startDate, $endDate) {
 	// format time:
 	$eStart = strtotime($event['startdatum']);
 	if ($eStart>$endDate) {
-		$timeInfo = strtotime('%A, %d.%m., ', $eStart).substr($event['startzeit'], 0, 5).' Uhr';
+		$timeInfo = strftime('%A, %d.%m., ', $eStart).substr($event['startzeit'], 0, 5).' Uhr';
 	} else {
-		$timeInfo = strtotime('%A, ', $eStart).substr($event['startzeit'], 0, 5).' Uhr';
+		$timeInfo = strftime('%A, ', $eStart).substr($event['startzeit'], 0, 5).' Uhr';
 	}
 	
 	// create the image
