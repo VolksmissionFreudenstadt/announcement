@@ -134,4 +134,4 @@ if ($config['include']['post'] && $_POST['post']) {
 }
 
 
-echo '<hr /><a href="index.php">Zurück zum Formular</a>'
+echo '<hr /><a href="index.php">Zurück zum Formular</a>';
