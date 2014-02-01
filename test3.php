@@ -15,7 +15,7 @@ try {
 // get start date:
 if (!strftime('%w')) $startDate=getTime('next Sunday'); else $startDate = getTime('today');
 
-echo strftime('Start: %d.%m.%Y %H:%M:%S<br />', $startTime);
+echo strftime('Start: %d.%m.%Y %H:%M:%S<br />', $startDate);
 die ('<pre>'.print_r($config, 1));
 
 
