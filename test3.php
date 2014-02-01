@@ -1,5 +1,51 @@
 <?php
 
+
+function createImage ($event, $index, $config, $startDate, $endDate) {
+	// format title
+	if ($gConf = $config['groups'][$event['name']]) {
+		$titleParts = array();
+		if (!$gConf['no_group']) $titleParts[] = $event['name'];
+		if (!$gConf['no_title']) $titleParts[] = $event['title'] ? $event['title'] : $event['kommentar'];
+	}
+	$title = join(': ', $titleParts);
+	
+	// format time:
+	if ($eStart = strtotime($event['startdatum'])>$endDate) {
+		$timeInfo = strtime('%A, %d.%m., ', $eStart).substr($event['startzeit'], 0, 5).' Uhr';
+	} else {
+		$timeInfo = strtime('%A, ', $eStart).substr($event['startzeit'], 0, 5).' Uhr';
+	}
+	
+	// create the image
+	$img = new Imagick();
+	$img->newImage (1024, 768, new ImagickPixel('white'));
+	$img->setImageFormat('jpeg');
+	
+	// copy test image onto background
+	$img2 = new Imagick(dirname(__FILE__).'/'.$event['image']);
+	$img->compositeImage($img2, Imagick::COMPOSITE_DEFAULT, 0, 0);
+	
+	// font settings
+	$draw = new ImagickDraw();
+	$draw->setFillColor('black');
+	$draw->setFont(dirname(__FILE__).'/fonts/OpenSans-Regular.ttf');
+	$draw->setFontSize(43);
+	
+	// first text
+	$img->annotateImage($draw, 30, 580, 0, $timeInfo);
+	
+	// second text
+	$draw->setFont(dirname(__FILE__).'/fonts/OpenSans-ExtraBold.ttf');
+	$draw->setFontSize(60);
+	$img->annotateImage($draw, 30, 650, 0, $title);
+	
+	// for debug reasons: output first image and die
+	Header('Content-Type: image/jpeg');
+	echo $img;
+}
+
+
 function getTime($s, $hour=0, $minute=0, $second=0, $base=NULL) {
 	if (!is_null($base)) $tmp = strtotime($s, $base); else $tmp = strtotime($s);
 	return mktime($hour, $minute, $second, strftime('%m', $tmp), strftime('%d', $tmp), strftime('%Y', $tmp));
@@ -15,7 +61,6 @@ try {
 // get start date:
 if (strftime('%w')) $startDate=getTime('next Sunday', 11); else $startDate = getTime('now', 11);
 $endDate = getTime('+7 days', 23, 59, 59, $startDate);
-echo strftime('Start: %d.%m.%Y %H:%M:%S<br />', $startDate);
 
 // connect to db
 $db = new mysqli($config['DB']['host'], $config['DB']['user'], $config['DB']['pass'], $config['DB']['name']);
@@ -40,5 +85,8 @@ while ($row = $res->fetch_assoc()) $rows[] = $row;
 foreach ($rows as $key => $row)
 	$rows[$key]['image'] = $row['my_vmfds_events_announcement_image'] ? $row['my_vmfds_events_announcement_image'] : $row['my_vmfds_events_announcement_group_image'];
 
-die ('<pre>'.print_r($rows, 1));
-	  
+$index = 0;
+foreach ($rows as $event) {
+	$index++;
+	createImage($event, $index, $config, $startDate, $endDate);
+}	  
