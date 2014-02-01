@@ -38,7 +38,7 @@ $rows = array();
 while ($row = $res->fetch_assoc()) $rows[] = $row;
 
 foreach ($rows as $key => $row)
-	$row[$key]['image'] = $row[$key]['my_vmfds_events_announcement_image'] ? $row[$key]['my_vmfds_events_announcement_image'] : $row[$key]['my_vmfds_events_announcement_group_image'];
+	$rows[$key]['image'] = $row[$key]['my_vmfds_events_announcement_image'] ? $row[$key]['my_vmfds_events_announcement_image'] : $row[$key]['my_vmfds_events_announcement_group_image'];
 
 die ('<pre>'.print_r($rows, 1));
 	  
