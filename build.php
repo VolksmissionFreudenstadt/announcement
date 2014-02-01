@@ -93,7 +93,7 @@ setlocale(LC_ALL, $config['locale']);
 
 // remove all files from output folder first?
 if ($config['output']['clear']) {
-	$files = glob($config['output']['clear'].'/*'); // get all file names
+	$files = glob($config['output']['path'].'/*'); // get all file names
 	foreach($files as $file){ // iterate files
 		if(is_file($file))
 			unlink($file); // delete file
