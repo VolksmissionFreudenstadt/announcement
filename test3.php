@@ -1,7 +1,7 @@
 <?php
 
-function getTime($s, $hour=0, $minute=0, $second=0, $base=NULL) {
-	$tmp = strtotime($s, $base);
+function getTime($s, $hour=0, $minute=0, $second=0) {
+	$tmp = strtotime($s);
 	return mktime($hour, $minute, $second, strftime('%m', $tmp), strftime('%d', $tmp), strftime('%Y', $tmp));
 }
 
@@ -13,8 +13,7 @@ try {
 } catch (Exception $e) {}
 
 // get start date:
-if (!strftime('%w')) $startDate=getTime('next Sunday'); else $startDate = getTime('today');
-
+if (!strftime('%w')) $startDate=getTime('next Sunday'); else $startDate = getTime('now');
 echo strftime('Start: %d.%m.%Y %H:%M:%S<br />', $startDate);
 die ('<pre>'.print_r($config, 1));
 
