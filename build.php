@@ -59,9 +59,12 @@ function createImage ($event, $index, $config, $startDate, $endDate) {
 	
 	
 	// write the image to the output folder
-	$fileName = $config['output']['path'].'/'.$config['output']['prefix'].str_pad($index, 3, '0', STR_PAD_LEFT).'.jpg';
+	$fileBaseName = $config['output']['prefix'].str_pad($index, 3, '0', STR_PAD_LEFT).'.jpg';
+	$fileName = $config['output']['path'].'/'.$fileBaseName;
 	echo 'Erstelle Folie für "'.utf8_encode($title).'" als '.$fileName.' ...<br />';
 	$img->writeImage($fileName);
+	
+	return $fileBaseName;
 }
 
 
@@ -119,6 +122,7 @@ if ($config['output']['clear']) {
 }
 
 $index = 0;
+$presentationFiles = array();
 
 // copy "pre" files
 if ($config['include']['pre'] && $_POST['pre']) {
@@ -126,7 +130,9 @@ if ($config['include']['pre'] && $_POST['pre']) {
 	foreach($files as $file){ // iterate files
 		if(is_file($file)) {
 			$index++;
-			$dest = $config['output']['path'].'/'.$config['output']['prefix'].str_pad($index, 3, '0', STR_PAD_LEFT).'.'.pathinfo($file, PATHINFO_EXTENSION);
+			$destBase = $config['output']['prefix'].str_pad($index, 3, '0', STR_PAD_LEFT).'.'.pathinfo($file, PATHINFO_EXTENSION);
+			$dest = $config['output']['path'].'/'.$destBase;
+			$presentationFiles[] = $destBase;
 			echo 'Kopiere '.$file.' nach '.$dest.'...<br />';
 			copy($file, $dest);
 		}
@@ -137,7 +143,7 @@ if ($config['include']['pre'] && $_POST['pre']) {
 if ($_POST['events']) {
 	foreach ($rows as $event) {
 		$index++;
-		createImage($event, $index, $config, $startDate, $endDate);
+		$presentationFiles[] = createImage($event, $index, $config, $startDate, $endDate);
 	}
 }
 
@@ -147,12 +153,33 @@ if ($config['include']['post'] && $_POST['post']) {
 	$files = glob($config['include']['post'].'/*'); // get all file names
 	foreach($files as $file){ // iterate files
 		if(is_file($file)) {
-			$dest = $config['output']['path'].'/'.$config['output']['prefix'].str_pad($index, 3, '0', STR_PAD_LEFT).'.'.pathinfo($file, PATHINFO_EXTENSION);
+			$destBase = $config['output']['prefix'].str_pad($index, 3, '0', STR_PAD_LEFT).'.'.pathinfo($file, PATHINFO_EXTENSION);
+			$dest = $config['output']['path'].'/'.$destBase;
+			$presentationFiles[] = $destBase;
 			echo 'Kopiere '.$file.' nach '.$dest.'...<br />';
 			copy($file, $dest);
 		}
 	}
 }
+
+
+// create presentation
+define ('CRLF', "\r\n");
+$fp = fopen (strftime($config['presentation']['path']), 'w');
+fwrite ('object PresentationSlideShow: TPresentationSlideShow'.CRLF, $fp);
+fwrite ('  SlideCollection = <', $fp);
+
+foreach ($presentationFiles as $img) {
+	fwrite (CRLF.'    item'.CRLF, $fp);
+	fwrite ('      FileName = \''.$config['presentation']['base'].$img.'\'', $fp);
+	fwrite ('    end', $fp);
+	
+}
+
+fwrite ('>'.CRLF.'  Loop = True'.CRLF, $fp);
+fwrite ('  FitToScreen = True'.CRLF, $fp);
+fwrite ('end', $fp);
+fclose ($fp);
 
 
 echo '<hr /><a href="index.php">Zurück zum Formular</a>';
