@@ -51,9 +51,9 @@ function createImage ($event, $index, $config, $startDate, $endDate) {
 	
 	// third text?
 	if ($event['my_vmfds_events_announcement_note'] && (!$gConf['no_note'])) {
-		$draw->setFont(dirname(__FILE__).'/fonts/OpenSans-Regular.ttf');
+		$draw->setFont(dirname(__FILE__).'/fonts/OpenSans-Italic.ttf');
 		$draw->setFontSize(38);
-		$img->annotateImage($draw, 30, 730, 0, $event['my_vmfds_events_announcement_note']);
+		$img->annotateImage($draw, 30, 710, 0, $event['my_vmfds_events_announcement_note']);
 	}
 	
 	
