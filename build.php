@@ -165,7 +165,9 @@ if ($config['include']['post'] && $_POST['post']) {
 
 // create presentation
 define ('CRLF', "\r\n");
-$fp = fopen (strftime($config['presentation']['path']), 'w');
+$presentation = strftime($config['presentation']['path']);
+echo 'Saving SongBeamer slideshow '.$presentation.' ... <br />';
+$fp = fopen ($presentation, 'w');
 fwrite ('object PresentationSlideShow: TPresentationSlideShow'.CRLF, $fp);
 fwrite ('  SlideCollection = <', $fp);
 
