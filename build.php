@@ -165,7 +165,7 @@ if ($config['include']['post'] && $_POST['post']) {
 
 // create presentation
 define ('CRLF', "\r\n");
-$presentation = strftime($config['presentation']['path']);
+$presentation = strftime($config['presentation']['path'], $startDate);
 echo 'Saving SongBeamer slideshow '.$presentation.' ... <br />';
 $fp = fopen ($presentation, 'w');
 fwrite ($fp, 'object PresentationSlideShow: TPresentationSlideShow'.CRLF);
@@ -173,7 +173,7 @@ fwrite ($fp, '  SlideCollection = <');
 
 foreach ($presentationFiles as $img) {
 	fwrite ($fp, CRLF.'    item'.CRLF);
-	fwrite ($fp, '      FileName = \''.$config['presentation']['base'].$img.'\'');
+	fwrite ($fp, '      FileName = \''.$config['presentation']['base'].$img.'\''.CRLF);
 	fwrite ($fp, '    end');
 	
 }
