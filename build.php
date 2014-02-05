@@ -15,7 +15,7 @@ function createImage ($event, $index, $config, $startDate, $endDate) {
 	$gConf = $config['groups'][$event['name']];
 	$titleParts = array();
 	if (!$gConf['no_group']) $titleParts[] = $event['name'];
-	if (!$gConf['no_title']) $titleParts[] = $event['title'] ? $event['title'] : $event['kommentar'];
+	if (!$gConf['no_title']) $titleParts[] = $event['my_vmfds_events_announcement_title'] ? $event['my_vmfds_events_announcement_title'] : ($event['title'] ? $event['title'] : $event['kommentar']);
 	$title = join(': ', $titleParts);
 	
 	// format time:
@@ -49,6 +49,15 @@ function createImage ($event, $index, $config, $startDate, $endDate) {
 	$draw->setFontSize(60);
 	$img->annotateImage($draw, 30, 650, 0, $title);
 	
+	// third text?
+	if ($event['my_vmfds_events_announcement_note'] && (!$gConf['no_note'])) {
+		$draw->setFont(dirname(__FILE__).'/fonts/OpenSans-Regular.ttf');
+		$draw->setFontSize(38);
+		$img->annotateImage($draw, 30, 730, 0, $event['my_vmfds_events_announcement_note']);
+	}
+	
+	
+	
 	// write the image to the output folder
 	$fileName = $config['output']['path'].'/'.$config['output']['prefix'].str_pad($index, 3, '0', STR_PAD_LEFT).'.jpg';
 	echo 'Erstelle Folie für "'.utf8_encode($title).'" als '.$fileName.' ...<br />';
@@ -81,7 +90,7 @@ if ($db->connect_errno) {
 	throw new Exception('Kann nicht mit der Datenbank verbinden: '.$db->connect_error);
 }
 
-$sql = 'SELECT event.title,event.kommentar,event.startdatum,event.startzeit,event.my_vmfds_events_announcement_image,grp.my_vmfds_events_announcement_group_image,grp.calendar_id,grp.name FROM ko_event event '
+$sql = 'SELECT event.*,grp.my_vmfds_events_announcement_group_image,grp.calendar_id,grp.name FROM ko_event event '
 	  .'LEFT JOIN ko_eventgruppen grp ON (event.eventgruppen_id = grp.id) '
 	  .'WHERE '
 	  .'(((STR_TO_DATE(CONCAT(event.startdatum, \' \', event.startzeit), \'%Y-%m-%d %H:%i:%s\')>=\''.strftime('%Y-%m-%d %H:%M:%S', $startDate).'\') '
