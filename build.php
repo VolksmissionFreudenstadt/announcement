@@ -168,19 +168,19 @@ define ('CRLF', "\r\n");
 $presentation = strftime($config['presentation']['path']);
 echo 'Saving SongBeamer slideshow '.$presentation.' ... <br />';
 $fp = fopen ($presentation, 'w');
-fwrite ('object PresentationSlideShow: TPresentationSlideShow'.CRLF, $fp);
-fwrite ('  SlideCollection = <', $fp);
+fwrite ($fp, 'object PresentationSlideShow: TPresentationSlideShow'.CRLF);
+fwrite ($fp, '  SlideCollection = <');
 
 foreach ($presentationFiles as $img) {
-	fwrite (CRLF.'    item'.CRLF, $fp);
-	fwrite ('      FileName = \''.$config['presentation']['base'].$img.'\'', $fp);
-	fwrite ('    end', $fp);
+	fwrite ($fp, CRLF.'    item'.CRLF);
+	fwrite ($fp, '      FileName = \''.$config['presentation']['base'].$img.'\'');
+	fwrite ($fp, '    end');
 	
 }
 
-fwrite ('>'.CRLF.'  Loop = True'.CRLF, $fp);
-fwrite ('  FitToScreen = True'.CRLF, $fp);
-fwrite ('end', $fp);
+fwrite ($fp, '>'.CRLF.'  Loop = True'.CRLF);
+fwrite ($fp, '  FitToScreen = True'.CRLF);
+fwrite ($fp, 'end');
 fclose ($fp);
 
 
