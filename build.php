@@ -173,7 +173,7 @@ fwrite ($fp, '  SlideCollection = <');
 
 foreach ($presentationFiles as $img) {
 	fwrite ($fp, CRLF.'    item'.CRLF);
-	fwrite ($fp, '      FileName = \''.$config['presentation']['base'].$img.'\'');
+	fwrite ($fp, '      FileName = \''.$config['presentation']['base'].$img.'\''.CRLF);
 	fwrite ($fp, '    end');
 	
 }
