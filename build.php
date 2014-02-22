@@ -74,7 +74,7 @@ function getTime($s, $hour=0, $minute=0, $second=0, $base=NULL) {
 }
 
 define('DEBUG', $_POST['debug']);
-if (DEBUG) echo '<pre>'.print_r($_POST).'</pre>';
+if (DEBUG) echo '<pre>'.print_r($_POST, 1).'</pre><br />';
 
 // global config
 define('CONFIG_FILE_NAME', 'config.yaml');
@@ -87,7 +87,7 @@ try {
 if (strftime('%w')) $startDate=getTime('next Sunday', 11); else $startDate = getTime('now', 11);
 $endDate = getTime('+7 days', 23, 59, 59, $startDate);
 
-if (DEBUG) echo strftime('%d.%m.%Y %H:%M%S', $startDate).' - '.strftime('%d.%m.%Y %H:%M%S', $endDate);
+if (DEBUG) echo 'Period: '.strftime('%d.%m.%Y %H:%M:%S', $startDate).' - '.strftime('%d.%m.%Y %H:%M:%S', $endDate).'<br />';
 
 // time code in file names
 $config['output']['prefix'] = strftime($config['output']['prefix'], $startDate);
@@ -116,6 +116,8 @@ while ($row = $res->fetch_assoc()) $rows[] = $row;
 
 foreach ($rows as $key => $row)
 	$rows[$key]['image'] = $row['my_vmfds_events_announcement_image'] ? $row['my_vmfds_events_announcement_image'] : $row['my_vmfds_events_announcement_group_image'];
+
+if (DEBUG) echo '<pre>'.print_r($rows, 1).'</pre><br />';
 
 setlocale(LC_ALL, $config['locale']);
 
