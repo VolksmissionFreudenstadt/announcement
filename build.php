@@ -73,7 +73,8 @@ function getTime($s, $hour=0, $minute=0, $second=0, $base=NULL) {
 	return mktime($hour, $minute, $second, strftime('%m', $tmp), strftime('%d', $tmp), strftime('%Y', $tmp));
 }
 
-define('DEBUG', $_REQUEST['debug']);
+define('DEBUG', $_POST['debug']);
+if (DEBUG) echo '<pre>'.print_r($_POST).'</pre>';
 
 // global config
 define('CONFIG_FILE_NAME', 'config.yaml');
