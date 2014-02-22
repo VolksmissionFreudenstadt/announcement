@@ -15,7 +15,8 @@
 				<input name="events" type="checkbox" checked value="1" /> Veranstaltungen aus dem kOOL-Kalender<br /> 
 				<input name="post" type="checkbox" checked value="1" /> Abschließende Folien<br />
 			</fieldset>
-			<input type="submit" name="submit" value="Erstellen" />  
+			<input type="submit" name="submit" value="Erstellen" />
+			<?php  if ($_GET['debug']) { ?><input type="hidden" name="debug" value="1" /><?php } ?>  
 		</form>
 	</body>
 	

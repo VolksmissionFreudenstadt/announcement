@@ -73,6 +73,8 @@ function getTime($s, $hour=0, $minute=0, $second=0, $base=NULL) {
 	return mktime($hour, $minute, $second, strftime('%m', $tmp), strftime('%d', $tmp), strftime('%Y', $tmp));
 }
 
+define('DEBUG', $_REQUEST['debug']);
+
 // global config
 define('CONFIG_FILE_NAME', 'config.yaml');
 try {
@@ -83,6 +85,8 @@ try {
 // get start date:
 if (strftime('%w')) $startDate=getTime('next Sunday', 11); else $startDate = getTime('now', 11);
 $endDate = getTime('+7 days', 23, 59, 59, $startDate);
+
+if (DEBUG) echo strtime('%d.%m.%Y %H:%M%S', $startDate).' - '.strftime('%d.%m.%Y %H:%M%S', $endDate);
 
 // time code in file names
 $config['output']['prefix'] = strftime($config['output']['prefix'], $startDate);
@@ -102,6 +106,8 @@ $sql = 'SELECT event.*,grp.my_vmfds_events_announcement_group_image,grp.calendar
 	  .'AND (grp.calendar_id IN ('.join(',',$config['kOOL']['calendars']).')) '
 	  .'ORDER BY STR_TO_DATE(CONCAT(event.startdatum, \' \', event.startzeit), \'%Y-%m-%d %H:%i:%s\') '
 	  .';';
+
+if (DEBUG) echo $sql.'<br />';
 
 $res = $db->query($sql);
 $rows = array();
