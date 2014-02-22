@@ -87,7 +87,7 @@ try {
 if (strftime('%w')) $startDate=getTime('next Sunday', 11); else $startDate = getTime('now', 11);
 $endDate = getTime('+7 days', 23, 59, 59, $startDate);
 
-if (DEBUG) echo strtime('%d.%m.%Y %H:%M%S', $startDate).' - '.strftime('%d.%m.%Y %H:%M%S', $endDate);
+if (DEBUG) echo strftime('%d.%m.%Y %H:%M%S', $startDate).' - '.strftime('%d.%m.%Y %H:%M%S', $endDate);
 
 // time code in file names
 $config['output']['prefix'] = strftime($config['output']['prefix'], $startDate);
