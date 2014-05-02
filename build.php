@@ -198,10 +198,12 @@ fwrite ($fp, '  FitToScreen = True'.CRLF);
 fwrite ($fp, 'end');
 fclose ($fp);
 
+ini_set('display_errors', 1);
 
 // create .odp presentation
 require_once('lib/PHPPowerpoint/Classes/PHPPowerPoint.php');
 $ppt = new PHPPowerPoint();
+$ppt->removeSlideByIndex(0);
 
 foreach ($presentationFiles as $img) {
 	$slide = $ppt->createSlide(); 
@@ -209,14 +211,16 @@ foreach ($presentationFiles as $img) {
 	$shape->setName('Announcement slide '.$img)
 	->setDescription('Announcement slide '.$img)
 	->setPath($config['output']['path'].'/'.$img)
-	->setHeight(768)
-	->setWidth(1024)
+	->setWidthAndHeight(1024, 768)
 	->setOffsetX(0)
 	->setOffsetY(0);
 }
 
-$objWriter = PHPPowerPoint_IOFactory::createWriter($objPHPPowerPoint, 'ODPresentation');
-$objWriter->save(strftime($config['presentation']['path'].'.odp', $startDate));
+
+$odpFile = strftime($config['odp']['path'], $startDate);
+echo 'Saving Powerpoint presentation file as '.$odpFile.' ... <br />';
+$objWriter = PHPPowerPoint_IOFactory::createWriter($ppt, 'PowerPoint2007');
+$objWriter->save($odpFile);
 
 
 
