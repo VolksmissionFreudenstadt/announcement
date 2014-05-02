@@ -16,7 +16,7 @@ function createImage ($event, $index, $config, $startDate, $endDate) {
 	$titleParts = array();
 	if (!$gConf['no_group']) $titleParts[] = $event['name'];
 	if (!$gConf['no_title']) $titleParts[] = $event['my_vmfds_events_announcement_title'] ? $event['my_vmfds_events_announcement_title'] : ($event['title'] ? $event['title'] : $event['kommentar']);
-	$title = join(': ', $titleParts);
+	if ($event['my_vmfds_events_announcement_title']) $title = $event['my_vmfds_events_announcement_title']; else $title = join(': ', $titleParts);
 	
 	// format time:
 	$eStart = strtotime($event['startdatum']);
@@ -152,8 +152,12 @@ if ($config['include']['pre'] && $_POST['pre']) {
 // output the images
 if ($_POST['events']) {
 	foreach ($rows as $event) {
-		$index++;
-		$presentationFiles[] = createImage($event, $index, $config, $startDate, $endDate);
+		if ($event['image']) {
+		    $index++;
+		    $presentationFiles[] = createImage($event, $index, $config, $startDate, $endDate);
+		} else {
+		    echo $event['title'].' hat kein Bild!<br />';
+		}
 	}
 }
 
@@ -163,6 +167,7 @@ if ($config['include']['post'] && $_POST['post']) {
 	$files = glob($config['include']['post'].'/*'); // get all file names
 	foreach($files as $file){ // iterate files
 		if(is_file($file)) {
+			$index++;
 			$destBase = $config['output']['prefix'].str_pad($index, 3, '0', STR_PAD_LEFT).'.'.pathinfo($file, PATHINFO_EXTENSION);
 			$dest = $config['output']['path'].'/'.$destBase;
 			$presentationFiles[] = $destBase;
@@ -173,7 +178,7 @@ if ($config['include']['post'] && $_POST['post']) {
 }
 
 
-// create presentation
+// create Songbeamer presentation
 define ('CRLF', "\r\n");
 $presentation = strftime($config['presentation']['path'], $startDate);
 echo 'Saving SongBeamer slideshow '.$presentation.' ... <br />';
@@ -192,6 +197,11 @@ fwrite ($fp, '>'.CRLF.'  Loop = True'.CRLF);
 fwrite ($fp, '  FitToScreen = True'.CRLF);
 fwrite ($fp, 'end');
 fclose ($fp);
+
+
+// create .odp presentation
+
+
 
 
 echo '<hr /><a href="index.php">Zurück zum Formular</a>';
