@@ -200,6 +200,23 @@ fclose ($fp);
 
 
 // create .odp presentation
+require_once('lib/PHPPowerpoint/Classes/PHPPowerPoint.php');
+$ppt = new PHPPowerPoint();
+
+foreach ($presentationFiles as $img) {
+	$slide = $ppt->createSlide(); 
+	$shape = $slide->createDrawingShape();
+	$shape->setName('Announcement slide '.$img)
+	->setDescription('Announcement slide '.$img)
+	->setPath($config['output']['path'].'/'.$img)
+	->setHeight(768)
+	->setWidth(1024)
+	->setOffsetX(0)
+	->setOffsetY(0);
+}
+
+$objWriter = PHPPowerPoint_IOFactory::createWriter($objPHPPowerPoint, 'ODPresentation');
+$objWriter->save(strftime($config['presentation']['path'].'.odp', $startDate));
 
 
 
