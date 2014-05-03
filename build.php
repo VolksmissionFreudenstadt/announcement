@@ -217,12 +217,22 @@ foreach ($presentationFiles as $img) {
 }
 
 
-$odpFile = strftime($config['odp']['path'], $startDate);
-echo 'Saving Powerpoint presentation file as '.$odpFile.' ... <br />';
+$pptFile = strftime($config['ppt']['path'], $startDate);
+echo 'Saving Powerpoint presentation file as '.$pptFile.' ... <br />';
 $objWriter = PHPPowerPoint_IOFactory::createWriter($ppt, 'PowerPoint2007');
-$objWriter->save($odpFile);
+$objWriter->save($pptFile);
 
 
+// set locale to work around bugs: ODPresentation writer needs to be run
+// on a locale that uses the dot (.) as decimal mark, otherwise the documents
+// will be invalid. This has been filed as issue #21 at
+// https://github.com/PHPOffice/PHPPowerPoint/issues/21
+setlocale(LC_ALL, 'en_US.utf8');
+
+$odpFile = strftime($config['odp']['path'], $startDate);
+echo 'Saving LibreOffice Impress presentation file as '.$odpFile.' ... <br />';
+$odpWriter = PHPPowerPoint_IOFactory::createWriter($ppt, 'ODPresentation');
+$odpWriter->save($odpFile);
 
 
 echo '<hr /><a href="index.php">Zurück zum Formular</a>';
